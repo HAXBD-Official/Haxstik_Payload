@@ -17,7 +17,7 @@ USB HID injection & security research device
 [![License: MIT](https://img.shields.io/badge/License-MIT-red.svg?style=flat-square)](LICENSE)
 [![Payloads](https://img.shields.io/badge/Payloads-15-brightgreen?style=flat-square)](#test-payload-index)
 [![PRs Welcome](https://img.shields.io/badge/PRs-Welcome-blue?style=flat-square)](CONTRIBUTING.md)
-[![Platform](https://img.shields.io/badge/Platform-Windows%20%7C%20Linux%20%7C%20macOS-lightgrey?style=flat-square)](#folder-structure)
+[![Platform](https://img.shields.io/badge/Platform-Windows%20%7C%20Linux%20%7C%20macOS%20%7C%20Android-lightgrey?style=flat-square)](#folder-structure)
 [![HAXBD](https://img.shields.io/badge/By-HAXBD--Official-ff003c?style=flat-square)](https://github.com/HAXBD-Official)
 
 </div>
@@ -68,6 +68,9 @@ Haxstik_Payload/
 ├── 📂 CTF/                ← Capture-the-flag helpers
 │                            Automation for CTF challenges
 │
+├── 📂 Android/            ← Android-specific payloads
+│                            ADB shortcuts, settings automation
+│
 └── 📂 Tools/              ← Productivity & automation
                              Clipboard tools, file ops, shortcuts
 ```
@@ -81,6 +84,7 @@ Haxstik_Payload/
 | `MacOS/` | macOS payloads | ⚠️ Varies |
 | `Fun/` | Non-destructive demos | ✅ Safe |
 | `CTF/` | CTF competition automation | ✅ CTF context |
+| `Android/` | Android automation payloads | ⚠️ Varies |
 | `Tools/` | Productivity helpers | ✅ Safe |
 
 ---
