@@ -1,122 +1,137 @@
-# HAX•STIK Payload Library
+<div align="center">
 
-A community-driven collection of DuckyScript payloads for the **HAX•STIK** — a custom USB HID injection and security research device.
+```
+██╗  ██╗ █████╗ ██╗  ██╗    ███████╗████████╗██╗██╗  ██╗
+██║  ██║██╔══██╗╚██╗██╔╝    ██╔════╝╚══██╔══╝██║██║ ██╔╝
+███████║███████║ ╚███╔╝     ███████╗   ██║   ██║█████╔╝ 
+██╔══██║██╔══██║ ██╔██╗     ╚════██║   ██║   ██║██╔═██╗ 
+██║  ██║██║  ██║██╔╝ ██╗    ███████║   ██║   ██║██║  ██╗
+╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝   ╚══════╝   ╚═╝   ╚═╝╚═╝  ╚═╝
+```
 
-This repository is open for contribution. Anyone can submit payloads, fix bugs, or improve existing scripts. All payloads must follow the ethics and format rules below.
+### Payload Library
+
+**A community-driven collection of DuckyScript payloads for the HAX•STIK**  
+USB HID injection & security research device
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-red.svg?style=flat-square)](LICENSE)
+[![Payloads](https://img.shields.io/badge/Payloads-15-brightgreen?style=flat-square)](#test-payload-index)
+[![PRs Welcome](https://img.shields.io/badge/PRs-Welcome-blue?style=flat-square)](CONTRIBUTING.md)
+[![Platform](https://img.shields.io/badge/Platform-Windows%20%7C%20Linux%20%7C%20macOS-lightgrey?style=flat-square)](#folder-structure)
+[![HAXBD](https://img.shields.io/badge/By-HAXBD--Official-ff003c?style=flat-square)](https://github.com/HAXBD-Official)
+
+</div>
 
 ---
 
-## What is HAX•STIK?
+## ⚡ What is HAX•STIK?
 
-HAX•STIK is a custom-built USB HID device. When plugged into a target computer, it appears as a USB keyboard and executes scripted keystrokes (payloads) automatically.
+HAX•STIK is a custom-built USB HID device. When plugged into a target computer, it appears as a standard USB keyboard and executes scripted keystrokes (payloads) automatically — no drivers, no software installation needed on the target.
 
-**Key features:**
-- USB HID keyboard injection (DuckyScript-compatible)
-- Built-in WiFi access point + web control panel
-- USB CDC serial channel for keylogger and loot capture
-- `<<LOOT>>...<</LOOT>>` marker protocol for auto-saving captured data
-- LED timing channel keylogger (no driver needed on target)
-- SPIFFS-based payload and loot storage
+**Features at a glance:**
 
-**HAX•STIK OS** is the firmware that runs on the device — hosted at [HAXBD-Official/HAXSTIK_OS](https://github.com/HAXBD-Official).
+| Feature | Description |
+|---------|-------------|
+| ⌨️ HID Injection | DuckyScript-compatible keystroke injection |
+| 📡 WiFi Control | Built-in AP + web control panel at `192.168.4.1` |
+| 🔑 Keylogger | LED timing channel — no driver needed on target |
+| 📦 Loot Capture | `<<LOOT>>...<</LOOT>>` auto-save protocol via USB CDC |
+| 💾 Storage | On-device payload and loot file storage |
+| 🛑 Emergency Stop | Halt injection mid-run from control panel |
+
+> **HAX•STIK OS** — the firmware powering the device — is at [HAXBD-Official/HAXSTIK_OS](https://github.com/HAXBD-Official)
 
 ---
 
-## Folder Structure
+## 📁 Folder Structure
 
 ```
 Haxstik_Payload/
 │
-├── Test Payload/          # HAX•STIK OS A-Z diagnostic payloads
-│                          # Run these to verify HAXSTIK is working correctly
+├── 📂 Test Payload/       ← HAX•STIK OS A-Z diagnostics (15 payloads)
+│                            Run these first to verify your device works
 │
-├── Recon/                 # System info gathering (read-only, safe)
-│                          # WiFi scans, sysinfo, user enumeration
+├── 📂 Recon/              ← System info gathering — read-only, safe
+│                            WiFi scans, sysinfo, user enumeration
 │
-├── Windows/               # Windows-specific payloads
-│                          # PowerShell, CMD, Registry, scheduled tasks
+├── 📂 Windows/            ← Windows-specific payloads
+│                            PowerShell, CMD, Registry, scheduled tasks
 │
-├── Linux/                 # Linux / Ubuntu payloads
-│                          # Bash, terminal automation
+├── 📂 Linux/              ← Linux / Ubuntu payloads
+│                            Bash, terminal automation
 │
-├── MacOS/                 # macOS payloads
-│                          # Terminal, AppleScript, Spotlight
+├── 📂 MacOS/              ← macOS payloads
+│                            Terminal, AppleScript, Spotlight
 │
-├── Fun/                   # Harmless demos, pranks, Easter eggs
-│                          # Rickroll, ASCII art, typing demos
+├── 📂 Fun/                ← Harmless demos, Easter eggs, pranks
+│                            Rickroll, ASCII art, typing demos
 │
-├── CTF/                   # CTF competition helpers
-│                          # Automation for capture-the-flag challenges
+├── 📂 CTF/                ← Capture-the-flag helpers
+│                            Automation for CTF challenges
 │
-└── Tools/                 # Productivity and automation payloads
-                           # File ops, clipboard tools, shortcuts
+└── 📂 Tools/              ← Productivity & automation
+                             Clipboard tools, file ops, shortcuts
 ```
 
----
-
-## Payload Categories Explained
-
-| Folder | Purpose | Safety Level |
-|--------|---------|-------------|
-| `Test Payload/` | Diagnose and verify HAX•STIK hardware + OS | Safe — read-only |
-| `Recon/` | Gather system info on authorized targets | Safe — read-only |
-| `Windows/` | Windows automation and testing payloads | Varies — check each file |
-| `Linux/` | Linux terminal payloads | Varies — check each file |
-| `MacOS/` | macOS payloads | Varies — check each file |
-| `Fun/` | Harmless demos, non-destructive pranks | Safe |
-| `CTF/` | CTF challenge automation | Safe in CTF context |
-| `Tools/` | Productivity automation | Safe |
+| Folder | Purpose | Safety |
+|--------|---------|--------|
+| `Test Payload/` | Verify HAX•STIK hardware + OS | ✅ Safe |
+| `Recon/` | Authorized system info gathering | ✅ Safe |
+| `Windows/` | Windows automation & testing | ⚠️ Varies |
+| `Linux/` | Linux terminal payloads | ⚠️ Varies |
+| `MacOS/` | macOS payloads | ⚠️ Varies |
+| `Fun/` | Non-destructive demos | ✅ Safe |
+| `CTF/` | CTF competition automation | ✅ CTF context |
+| `Tools/` | Productivity helpers | ✅ Safe |
 
 ---
 
-## How to Use a Payload
+## 🚀 Quick Start
 
-1. Open **HAX•STIK OS** control panel via WiFi (`192.168.4.1`)
-2. Go to the **Payload Manager** tab
-3. Upload a `.txt` payload file from this repo
-4. Click **Run** — HAX•STIK will execute the script as a USB keyboard
+```
+1. Plug HAX•STIK into target PC
+2. Connect your phone/laptop to HAX•STIK WiFi
+3. Open browser → 192.168.4.1
+4. Go to Payload Manager tab
+5. Upload a .txt payload from this repo
+6. Press RUN
+```
 
-**Important:** Plug HAX•STIK into the target PC before running. The target PC sees it as a standard USB keyboard — no drivers needed.
+> The target PC sees HAX•STIK as a USB keyboard — no setup required on target.
 
 ---
 
-## DuckyScript Command Reference
+## 📋 DuckyScript Command Reference
 
-HAX•STIK uses a DuckyScript-compatible syntax. Supported commands:
+HAX•STIK uses a DuckyScript-compatible syntax:
 
 | Command | Example | Description |
 |---------|---------|-------------|
-| `STRING` | `STRING hello world` | Types a string as keystrokes |
-| `ENTER` | `ENTER` | Presses Enter key |
-| `DELAY` | `DELAY 500` | Waits N milliseconds |
-| `DEFAULTDELAY` | `DEFAULTDELAY 100` | Sets delay between every command |
-| `REM` | `REM comment` | Comment — ignored during execution |
-| `REPEAT` | `REPEAT 5` | Repeats the previous command N times |
-| `GUI` | `GUI r` | Windows key + key (e.g. GUI r = Run dialog) |
+| `STRING` | `STRING hello world` | Types text as keystrokes |
+| `ENTER` | `ENTER` | Presses Enter |
+| `DELAY` | `DELAY 500` | Wait N milliseconds |
+| `DEFAULTDELAY` | `DEFAULTDELAY 100` | Delay between every command |
+| `REM` | `REM comment here` | Comment — skipped during run |
+| `REPEAT` | `REPEAT 5` | Repeat previous command N times |
+| `GUI` | `GUI r` | Windows key + key |
 | `CTRL` | `CTRL c` | Control + key |
 | `SHIFT` | `SHIFT TAB` | Shift + key |
 | `ALT` | `ALT F4` | Alt + key |
-| `ESCAPE` | `ESCAPE` | Presses Escape |
-| `TAB` | `TAB` | Presses Tab |
-| `BACKSPACE` | `BACKSPACE` | Presses Backspace |
-| `DELETE` | `DELETE` | Presses Delete |
-| `HOME` | `HOME` | Presses Home |
-| `END` | `END` | Presses End |
-| `UPARROW` | `UPARROW` | Up arrow key |
-| `DOWNARROW` | `DOWNARROW` | Down arrow key |
-| `LEFTARROW` | `LEFTARROW` | Left arrow key |
-| `RIGHTARROW` | `RIGHTARROW` | Right arrow key |
-| `CAPSLOCK` | `CAPSLOCK` | Toggles Caps Lock |
-| `NUMLOCK` | `NUMLOCK` | Toggles Num Lock |
-| `F1`–`F12` | `F5` | Function keys |
-| `PAGEUP` | `PAGEUP` | Page Up |
-| `PAGEDOWN` | `PAGEDOWN` | Page Down |
+| `ESCAPE` | `ESCAPE` | Escape key |
+| `TAB` / `BACKSPACE` | `TAB` | Tab / Backspace |
+| `HOME` / `END` | `HOME` | Home / End |
+| `UPARROW` / `DOWNARROW` | `UPARROW` | Arrow keys |
+| `LEFTARROW` / `RIGHTARROW` | `LEFTARROW` | Arrow keys |
+| `CAPSLOCK` / `NUMLOCK` | `CAPSLOCK` | Lock key toggle |
+| `F1` – `F12` | `F5` | Function keys |
+| `PAGEUP` / `PAGEDOWN` | `PAGEUP` | Page navigation |
+| `DELETE` | `DELETE` | Delete key |
 
 ---
 
-## Payload File Template
+## 🧩 Payload File Template
 
-Every payload submitted to this repo **must** follow this format:
+Every submitted payload **must** use this header format:
 
 ```
 REM ================================================================
@@ -130,87 +145,89 @@ REM  PURPOSE:
 REM    [What this payload does. 2-4 lines.]
 REM
 REM  PRE-REQUISITE:
-REM    [Anything the operator must do before running this payload.]
-REM    [Write NONE if nothing is needed.]
+REM    [What the operator must do before running. Write NONE if nothing.]
 REM
 REM  WHAT TO LOOK FOR:
-REM    [How to verify the payload worked correctly.]
-REM    [List expected outputs or visible results.]
+REM    [How to confirm the payload worked. List expected outputs.]
 REM ================================================================
 
 DEFAULTDELAY 150
 
-REM --- Your payload starts here ---
+REM --- Payload starts here ---
 ```
 
 **Rules:**
-- Header block is mandatory — no exceptions
-- `SAFE: YES` payloads must make zero permanent changes to the target
-- `SAFE: NO` payloads must clearly state what they modify and require explicit authorization
-- No payload may be designed to harm, destroy data, or evade detection on unauthorized targets
-- File name format: `NN_short_description.txt` (e.g. `16_clipboard_dump.txt`)
+- Header block is **mandatory** — no exceptions
+- `SAFE: YES` → zero permanent changes to target
+- `SAFE: NO` → must state exactly what is modified, authorized use only
+- No payloads designed to harm, destroy data, or evade detection on unauthorized systems
+- File naming: `NN_short_description.txt` — e.g. `16_clipboard_dump.txt`
 
 ---
 
-## How to Contribute
+## 🤝 How to Contribute
 
 1. **Fork** this repository
-2. Create your payload file following the template above
+2. Write your payload using the template above
 3. Place it in the correct category folder
-4. Submit a **Pull Request** with:
-   - A short title: `Add: [payload name]`
-   - A description of what it does and what OS it targets
-   - Confirm it is tested on real hardware or emulator
+4. Open a **Pull Request** with title: `Add: [payload name]`
 
-**Contribution checklist:**
-- [ ] Header block is complete (all fields filled)
-- [ ] File is in the correct category folder
+**Before submitting, confirm:**
+- [ ] Header block complete — all fields filled
+- [ ] File is in the correct folder
 - [ ] File name follows `NN_short_description.txt` format
-- [ ] Payload has been tested — results match the `WHAT TO LOOK FOR` section
-- [ ] No destructive or unauthorized-use commands included
+- [ ] Tested on real hardware or emulator
+- [ ] Output matches the `WHAT TO LOOK FOR` section
+- [ ] No destructive or unauthorized-use commands
 
 ---
 
-## Test Payload Index
+## 🗂️ Test Payload Index
 
-These 15 payloads in `Test Payload/` are the official HAX•STIK OS diagnostic suite. Run them in order to verify every feature of your device:
+15 official HAX•STIK OS diagnostic payloads — run in order to verify every feature:
 
-| # | File | Tests |
-|---|------|-------|
-| 01 | basic_ping_test | HID alive — Notepad opens and types |
-| 02 | injection_speed_test | 4 speed tiers: 10 / 30 / 50 / 100 ms |
-| 03 | modifier_keys_test | SHIFT, CTRL+A, CTRL+C, CTRL+Z |
-| 04 | special_chars_test | Symbols, brackets, common payload characters |
-| 05 | repeat_delay_commands_test | REPEAT N and DELAY timing accuracy |
-| 06 | lock_keys_test | CAPSLOCK and NUMLOCK toggle |
-| 07 | navigation_function_keys_test | Arrow keys, HOME, END, TAB, F-keys |
-| 08 | gui_shortcuts_test | GUI+R (Run), GUI+D (Desktop), GUI+E (Explorer) |
-| 09 | windows_sysinfo_safe | hostname, whoami, ipconfig, net user (read-only) |
-| 10 | wifi_scan_safe | netsh wlan — nearby networks + saved profiles |
-| 11 | keylogger_live_test | Known strings for keylogger channel verification |
-| 12 | loot_capture_test | USB CDC `<<LOOT>>` marker protocol test |
-| 13 | long_string_stability_test | 80–150 char lines — buffer overflow check |
-| 14 | emergency_stop_test | Slow countdown — test STOP button mid-run |
-| 15 | full_az_diagnostic | Master A-Z run — all features in one payload |
-
----
-
-## Legal & Ethics Notice
-
-> **This repository is for authorized security research, penetration testing, CTF competitions, hardware testing, and educational purposes only.**
-
-- Only use HAX•STIK and these payloads on systems you own or have **explicit written permission** to test
-- Unauthorized use against systems you do not own is illegal in most countries (CFAA, Computer Misuse Act, IT Act, etc.)
-- The contributors and maintainers of this repository are not responsible for misuse
-- Payloads marked `SAFE: YES` are read-only — they gather information but make no changes
-- Payloads marked `SAFE: NO` must only be used in authorized, controlled environments
-
-By using or contributing to this repository, you agree to use these payloads **ethically and legally**.
+| # | Payload | What It Tests |
+|---|---------|--------------|
+| 01 | `basic_ping_test` | HID alive — Notepad opens and types |
+| 02 | `injection_speed_test` | 4 speed tiers: 10 / 30 / 50 / 100 ms |
+| 03 | `modifier_keys_test` | SHIFT, CTRL+A, CTRL+C, CTRL+Z |
+| 04 | `special_chars_test` | Symbols, brackets, common payload characters |
+| 05 | `repeat_delay_commands_test` | REPEAT N and DELAY timing accuracy |
+| 06 | `lock_keys_test` | CAPSLOCK and NUMLOCK toggle |
+| 07 | `navigation_function_keys_test` | Arrow keys, HOME, END, TAB, F-keys |
+| 08 | `gui_shortcuts_test` | GUI+R (Run), GUI+D (Desktop), GUI+E (Explorer) |
+| 09 | `windows_sysinfo_safe` | hostname, whoami, ipconfig, net user — read-only |
+| 10 | `wifi_scan_safe` | netsh wlan — nearby networks + saved profiles |
+| 11 | `keylogger_live_test` | Known strings for keylogger channel verification |
+| 12 | `loot_capture_test` | USB CDC `<<LOOT>>` marker protocol test |
+| 13 | `long_string_stability_test` | 80–150 char lines — buffer overflow detection |
+| 14 | `emergency_stop_test` | Slow countdown — test STOP button mid-run |
+| 15 | `full_az_diagnostic` | Master run — all features tested in one payload |
 
 ---
 
-## License
+## ⚖️ Legal & Ethics Notice
 
-MIT License — see [LICENSE](LICENSE) for details.
+> **For authorized security research, penetration testing, CTF competitions, hardware testing, and educational use only.**
 
-Contributions are welcome. Be responsible. Test ethically.
+- ✅ Use only on systems you **own** or have **explicit written permission** to test
+- ❌ Unauthorized use is illegal — CFAA, Computer Misuse Act, IT Act, and equivalents worldwide
+- ❌ No payload may target, harm, or exfiltrate from systems without consent
+- ⚠️ `SAFE: NO` payloads must only run in authorized, controlled environments
+- The contributors and maintainers are **not responsible** for misuse
+
+*By contributing or using payloads from this repository, you agree to act ethically and legally.*
+
+---
+
+## 📄 License
+
+MIT — see [LICENSE](LICENSE) for details.
+
+<div align="center">
+
+**Built for HAX•STIK — test responsibly, hack ethically.**
+
+[![HAXBD-Official](https://img.shields.io/badge/github-HAXBD--Official-181717?style=for-the-badge&logo=github)](https://github.com/HAXBD-Official)
+
+</div>
