@@ -1,6 +1,6 @@
 # HAX•STIK Payload Library
 
-A community-driven collection of DuckyScript payloads for the **HAX•STIK** — an ESP32-S3-based USB HID injection and security research device.
+A community-driven collection of DuckyScript payloads for the **HAX•STIK** — a custom USB HID injection and security research device.
 
 This repository is open for contribution. Anyone can submit payloads, fix bugs, or improve existing scripts. All payloads must follow the ethics and format rules below.
 
@@ -8,7 +8,7 @@ This repository is open for contribution. Anyone can submit payloads, fix bugs, 
 
 ## What is HAX•STIK?
 
-HAX•STIK is a custom-built USB HID device powered by the ESP32-S3 SuperMini. When plugged into a target computer, it appears as a USB keyboard and executes scripted keystrokes (payloads) automatically.
+HAX•STIK is a custom-built USB HID device. When plugged into a target computer, it appears as a USB keyboard and executes scripted keystrokes (payloads) automatically.
 
 **Key features:**
 - USB HID keyboard injection (DuckyScript-compatible)
