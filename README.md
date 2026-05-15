@@ -39,7 +39,6 @@ HAX•STIK is a custom-built USB HID device. When plugged into a target computer
 | 💾 Storage | On-device payload and loot file storage |
 | 🛑 Emergency Stop | Halt injection mid-run from control panel |
 
-> **HAX•STIK OS** — the firmware powering the device — is at [HAXBD-Official/HAXSTIK_OS](https://github.com/HAXBD-Official)
 
 ---
 
