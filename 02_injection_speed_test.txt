@@ -1,0 +1,91 @@
+REM ================================================================
+REM  PAYLOAD  : 02 - Injection Speed Test
+REM  VERSION  : 1.0
+REM  TARGET OS: Windows
+REM  SAFE     : YES — opens Notepad only
+REM ----------------------------------------------------------------
+REM  PURPOSE:
+REM    Tests payload injection at 4 different speeds to find the
+REM    optimal DEFAULTDELAY for the target machine.
+REM    Reveals stuttering, missed characters, or timing bugs.
+REM
+REM  WHAT TO LOOK FOR:
+REM    - At 10ms: characters may be missed on slow PCs (normal)
+REM    - At 30ms: should be smooth on most PCs (HAXSTIK default)
+REM    - At 50ms: reliable on all PCs, slower visually
+REM    - At 100ms: very slow but 100% reliable
+REM    - Any section with missing characters = that speed is too fast
+REM    - Check HAXSTIK log for "Done (X lines)" — should complete
+REM
+REM  HOW TO TEST:
+REM    1. Plug into Windows PC with Notepad open (or let payload open it)
+REM    2. Run payload, observe each speed block for missing chars
+REM    3. Compare injection quality in Notepad
+REM ================================================================
+
+DEFAULTDELAY 120
+
+GUI r
+DELAY 600
+STRING notepad
+ENTER
+DELAY 1200
+
+STRING ================================================
+ENTER
+STRING   HAXSTIK OS — SPEED TEST
+ENTER
+STRING ================================================
+ENTER
+ENTER
+
+REM --- Block 1: 10ms speed (ultra fast) ---
+STRING [ SPEED: 10ms — Ultra Fast ]
+ENTER
+DEFAULTDELAY 10
+STRING The quick brown fox jumps over the lazy dog 1234567890 !@#$%^&*()
+ENTER
+DEFAULTDELAY 120
+
+STRING   Result: Check above for missing characters
+ENTER
+ENTER
+
+REM --- Block 2: 30ms speed (default) ---
+STRING [ SPEED: 30ms — Default ]
+ENTER
+DEFAULTDELAY 30
+STRING The quick brown fox jumps over the lazy dog 1234567890 !@#$%^&*()
+ENTER
+DEFAULTDELAY 120
+
+STRING   Result: Check above for missing characters
+ENTER
+ENTER
+
+REM --- Block 3: 50ms speed (safe) ---
+STRING [ SPEED: 50ms — Safe ]
+ENTER
+DEFAULTDELAY 50
+STRING The quick brown fox jumps over the lazy dog 1234567890 !@#$%^&*()
+ENTER
+DEFAULTDELAY 120
+
+STRING   Result: Check above for missing characters
+ENTER
+ENTER
+
+REM --- Block 4: 100ms speed (ultra safe) ---
+STRING [ SPEED: 100ms — Ultra Safe ]
+ENTER
+DEFAULTDELAY 100
+STRING The quick brown fox jumps over the lazy dog 1234567890 !@#$%^&*()
+ENTER
+DEFAULTDELAY 120
+
+STRING ================================================
+ENTER
+STRING   SPEED TEST COMPLETE
+ENTER
+STRING ================================================
+ENTER

@@ -1,0 +1,104 @@
+REM ================================================================
+REM  PAYLOAD  : 07 - Navigation & Function Keys Test
+REM  VERSION  : 1.0
+REM  TARGET OS: Windows
+REM  SAFE     : YES — Notepad navigation only
+REM ----------------------------------------------------------------
+REM  PURPOSE:
+REM    Tests arrow keys, HOME, END, PAGE_UP, PAGE_DOWN, TAB,
+REM    BACKSPACE, DELETE, ESCAPE and F-keys (F1-F12).
+REM    Navigation key failures cause payloads that move the cursor
+REM    to put text in wrong places or miss targets entirely.
+REM
+REM  WHAT TO LOOK FOR:
+REM    - Cursor moves correctly in Notepad
+REM    - TAB inserts tab character
+REM    - BACKSPACE deletes last character
+REM    - HOME/END move cursor to line start/end
+REM    - F5 in Notepad inserts date/time (built-in Notepad feature)
+REM    - HAXSTIK log should complete without errors
+REM ================================================================
+
+DEFAULTDELAY 100
+
+GUI r
+DELAY 600
+STRING notepad
+ENTER
+DELAY 1200
+
+STRING ================================================
+ENTER
+STRING   HAXSTIK OS — NAVIGATION AND FUNCTION KEY TEST
+ENTER
+STRING ================================================
+ENTER
+ENTER
+
+REM --- TAB test ---
+STRING [ TEST: TAB key ]
+ENTER
+STRING col1
+TAB
+STRING col2
+TAB
+STRING col3
+ENTER
+STRING   Expected: col1 [tab] col2 [tab] col3
+ENTER
+ENTER
+
+REM --- BACKSPACE test ---
+STRING [ TEST: BACKSPACE ]
+ENTER
+STRING HelloXXX
+BACKSPACE
+BACKSPACE
+BACKSPACE
+STRING  — 3 chars deleted
+ENTER
+STRING   Expected: Hello — 3 chars deleted
+ENTER
+ENTER
+
+REM --- HOME and END test ---
+STRING [ TEST: HOME and END ]
+ENTER
+STRING middle
+HOME
+STRING START-
+END
+STRING -END
+ENTER
+STRING   Expected: START-middle-END
+ENTER
+ENTER
+
+REM --- Arrow keys test ---
+STRING [ TEST: Arrow Keys ]
+ENTER
+STRING ABCDE
+LEFT
+LEFT
+LEFT
+STRING ---
+ENTER
+STRING   Expected: AB---CDE
+ENTER
+ENTER
+
+REM --- F5 in Notepad inserts timestamp ---
+STRING [ TEST: F5 — Notepad timestamp ]
+ENTER
+F5
+ENTER
+STRING   Expected: current date/time inserted above by Windows
+ENTER
+ENTER
+
+STRING ================================================
+ENTER
+STRING   NAVIGATION AND FUNCTION KEY TEST COMPLETE
+ENTER
+STRING ================================================
+ENTER

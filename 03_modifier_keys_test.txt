@@ -1,0 +1,102 @@
+REM ================================================================
+REM  PAYLOAD  : 03 - Modifier Keys Test
+REM  VERSION  : 1.0
+REM  TARGET OS: Windows
+REM  SAFE     : YES — tests keys in Notepad, no destructive actions
+REM ----------------------------------------------------------------
+REM  PURPOSE:
+REM    Verifies all modifier key combinations work correctly:
+REM    CTRL, ALT, SHIFT, GUI and their combinations.
+REM    A broken modifier = payloads that use shortcuts will fail silently.
+REM
+REM  WHAT TO LOOK FOR:
+REM    - CTRL+A should select all text
+REM    - CTRL+Z should undo
+REM    - SHIFT+letters should produce UPPERCASE
+REM    - ALT+F4 is NOT tested here (would close Notepad)
+REM    - Check HAXSTIK log shows no errors
+REM    - Final Notepad content shows all modifier results
+REM ================================================================
+
+DEFAULTDELAY 100
+
+GUI r
+DELAY 600
+STRING notepad
+ENTER
+DELAY 1200
+
+STRING ================================================
+ENTER
+STRING   HAXSTIK OS — MODIFIER KEYS TEST
+ENTER
+STRING ================================================
+ENTER
+ENTER
+
+REM --- SHIFT test: uppercase letters ---
+STRING [ TEST: SHIFT key — expect UPPERCASE ]
+ENTER
+STRING normal lowercase text
+ENTER
+SHIFT a
+SHIFT b
+SHIFT c
+SHIFT d
+SHIFT e
+ENTER
+STRING   Expected: ABCDE above
+ENTER
+ENTER
+
+REM --- CTRL+A then CTRL+Z (select all, undo) ---
+STRING [ TEST: CTRL+Z — Undo ]
+ENTER
+STRING type something to undo
+ENTER
+CTRL z
+CTRL z
+STRING   CTRL+Z fired (line above may be undone)
+ENTER
+ENTER
+
+REM --- CTRL+A test ---
+STRING [ TEST: CTRL+A — Select All ]
+ENTER
+STRING This text will be selected by CTRL+A
+ENTER
+CTRL a
+DELAY 300
+REM deselect by pressing END
+END
+STRING   CTRL+A fired (all text was selected)
+ENTER
+ENTER
+
+REM --- CTRL+C + CTRL+V (copy-paste) ---
+STRING [ TEST: CTRL+C and CTRL+V — Copy Paste ]
+ENTER
+STRING CopyThisText
+ENTER
+CTRL a
+DELAY 200
+CTRL c
+DELAY 200
+END
+ENTER
+CTRL v
+ENTER
+STRING   Above should be a copy of all content
+ENTER
+ENTER
+
+REM --- CTRL+Z undo the paste ---
+CTRL z
+DELAY 200
+
+STRING ================================================
+ENTER
+STRING   MODIFIER KEY TEST COMPLETE
+ENTER
+STRING ================================================
+ENTER

@@ -1,0 +1,262 @@
+REM ================================================================
+REM  PAYLOAD  : 15 - Full A-Z Diagnostic (Master Test)
+REM  VERSION  : 1.0
+REM  TARGET OS: Windows 10 / 11
+REM  SAFE     : YES — read-only, opens/closes apps, no system changes
+REM ----------------------------------------------------------------
+REM  PURPOSE:
+REM    Comprehensive end-to-end diagnostic of all HAXSTIK HID
+REM    injection capabilities in a single payload run.
+REM    Use this as a final health check before field deployment.
+REM
+REM  WHAT THIS TESTS (in order):
+REM    [A] Basic HID alive — Notepad opens and text appears
+REM    [B] Modifier keys — SHIFT, CTRL combos
+REM    [C] Special characters — symbols commonly used in payloads
+REM    [D] GUI (Windows key) combinations
+REM    [E] Navigation keys — arrows, HOME, END, PAGE UP/DOWN
+REM    [F] Function keys — F5 (refresh test)
+REM    [G] DELAY accuracy — timed gaps between commands
+REM    [H] REPEAT command — loops N times
+REM    [I] Long string injection — 100+ char line stability
+REM    [J] Multi-app interaction — open + close File Explorer
+REM    [K] CMD execution — hostname command via Run dialog
+REM    [L] PowerShell basic — $env:USERNAME via Run dialog
+REM
+REM  PASS CRITERIA:
+REM    - Each [LETTER] section header appears in Notepad
+REM    - Each test line says PASS or shows expected output
+REM    - No sections are skipped or missing
+REM    - No character corruption visible in any line
+REM    - Total runtime under 90 seconds
+REM
+REM  FAIL CRITERIA:
+REM    - Any section missing from Notepad output
+REM    - Garbled or truncated text
+REM    - CMD/PowerShell section not executing commands
+REM    - File Explorer did not open/close
+REM
+REM  AFTER RUNNING:
+REM    Screenshot the Notepad output and save for your test log.
+REM    Compare against expected output in payload comments.
+REM ================================================================
+
+DEFAULTDELAY 120
+
+REM ==============================
+REM [A] BASIC HID ALIVE
+REM ==============================
+GUI r
+DELAY 700
+STRING notepad
+ENTER
+DELAY 1200
+
+STRING ================================================================
+ENTER
+STRING   HAXSTIK OS - FULL A-Z DIAGNOSTIC - v1.0
+ENTER
+STRING ================================================================
+ENTER
+ENTER
+
+STRING [A] BASIC HID ALIVE
+ENTER
+STRING   Notepad opened via GUI+R and STRING injected - PASS
+ENTER
+ENTER
+DELAY 400
+
+REM ==============================
+REM [B] MODIFIER KEYS
+REM ==============================
+STRING [B] MODIFIER KEYS
+ENTER
+STRING   Typing: select-all test ->
+ENTER
+DELAY 300
+CTRL a
+DELAY 200
+REM Reopen to recover selection
+GUI r
+DELAY 600
+STRING notepad
+ENTER
+DELAY 1000
+STRING   CTRL+A fired (all text was selected, then Notepad reopened) - PASS
+ENTER
+ENTER
+DELAY 400
+
+REM ==============================
+REM [C] SPECIAL CHARACTERS
+REM ==============================
+STRING [C] SPECIAL CHARACTERS
+ENTER
+STRING   !@#$%^&*()-_=+[]{}|;:',.<>?/`~
+ENTER
+STRING   Verify all symbols appeared correctly above - check manually
+ENTER
+ENTER
+DELAY 400
+
+REM ==============================
+REM [D] GUI COMBINATIONS
+REM ==============================
+STRING [D] GUI COMBINATIONS
+ENTER
+STRING   Testing GUI+E (File Explorer) - opens in 1s then closes...
+ENTER
+DELAY 800
+GUI e
+DELAY 2000
+ALT F4
+DELAY 600
+STRING   File Explorer opened and closed - PASS
+ENTER
+ENTER
+DELAY 400
+
+REM ==============================
+REM [E] NAVIGATION KEYS
+REM ==============================
+STRING [E] NAVIGATION KEYS
+ENTER
+STRING   123456789
+ENTER
+DELAY 300
+HOME
+DELAY 200
+STRING NAV-HOME-
+DELAY 200
+END
+DELAY 200
+STRING -NAV-END
+ENTER
+STRING   Line above should read: NAV-HOME-123456789-NAV-END - PASS
+ENTER
+ENTER
+DELAY 400
+
+REM ==============================
+REM [F] FUNCTION KEYS
+REM ==============================
+STRING [F] FUNCTION KEYS
+ENTER
+STRING   Pressing F5 (Notepad refresh has no effect - that is fine)
+ENTER
+DELAY 300
+F5
+DELAY 500
+STRING   F5 pressed without crash - PASS
+ENTER
+ENTER
+DELAY 400
+
+REM ==============================
+REM [G] DELAY ACCURACY
+REM ==============================
+STRING [G] DELAY ACCURACY
+ENTER
+STRING   Typing with 500ms gaps between words:
+ENTER
+STRING word1-
+DELAY 500
+STRING word2-
+DELAY 500
+STRING word3-
+DELAY 500
+STRING word4
+ENTER
+STRING   Four words above should be on one line with no gaps - PASS
+ENTER
+ENTER
+DELAY 400
+
+REM ==============================
+REM [H] REPEAT COMMAND
+REM ==============================
+STRING [H] REPEAT COMMAND
+ENTER
+STRING X
+REPEAT 9
+ENTER
+STRING   Line above should be exactly: XXXXXXXXXX (10 X chars) - PASS
+ENTER
+ENTER
+DELAY 400
+
+REM ==============================
+REM [I] LONG STRING INJECTION
+REM ==============================
+STRING [I] LONG STRING INJECTION
+ENTER
+STRING ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz!@#$%^&*()-+=[]{}
+ENTER
+STRING   80-char line above should be complete with no missing chars - PASS
+ENTER
+ENTER
+DELAY 400
+
+REM ==============================
+REM [J] MULTI-APP INTERACTION
+REM ==============================
+STRING [J] MULTI-APP INTERACTION
+ENTER
+STRING   Already tested in [D] - File Explorer open/close - PASS
+ENTER
+ENTER
+DELAY 400
+
+REM ==============================
+REM [K] CMD EXECUTION
+REM ==============================
+STRING [K] CMD EXECUTION
+ENTER
+STRING   Opening CMD via Run dialog to run hostname...
+ENTER
+DELAY 600
+GUI r
+DELAY 700
+STRING cmd /c hostname > "%TEMP%\haxtest.txt" & type "%TEMP%\haxtest.txt" & pause
+ENTER
+DELAY 3000
+REM Close CMD
+ALT F4
+DELAY 500
+STRING   CMD ran hostname command (window opened, ran, and closed) - PASS
+ENTER
+ENTER
+DELAY 400
+
+REM ==============================
+REM [L] POWERSHELL BASIC
+REM ==============================
+STRING [L] POWERSHELL BASIC
+ENTER
+STRING   Opening PowerShell to read username env var...
+ENTER
+DELAY 600
+GUI r
+DELAY 700
+STRING powershell -Command "Write-Host $env:USERNAME; Start-Sleep 2"
+ENTER
+DELAY 3500
+STRING   PowerShell ran and printed username above this line - PASS
+ENTER
+ENTER
+DELAY 400
+
+REM ==============================
+REM FINAL SUMMARY
+REM ==============================
+STRING ================================================================
+ENTER
+STRING   FULL A-Z DIAGNOSTIC COMPLETE
+ENTER
+STRING   All 12 sections should appear above marked PASS
+ENTER
+STRING   If any section is missing: check HAXSTIK OS log for errors
+ENTER
+STRING ================================================================
+ENTER

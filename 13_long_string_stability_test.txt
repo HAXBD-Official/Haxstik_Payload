@@ -1,0 +1,101 @@
+REM ================================================================
+REM  PAYLOAD  : 13 - Long String Stability Test
+REM  VERSION  : 1.0
+REM  TARGET OS: Windows (any — uses Notepad)
+REM  SAFE     : YES — types only, no system changes
+REM ----------------------------------------------------------------
+REM  PURPOSE:
+REM    Tests whether HAXSTIK handles long STRING injections without
+REM    dropping, truncating, or corrupting characters.
+REM
+REM    WHAT THIS TESTS:
+REM    - HID USB buffer stability under large payloads
+REM    - No dropped characters mid-string
+REM    - No HID report queue overflow (>64 bytes per HID frame)
+REM    - Repeatability: each line should appear exactly as shown
+REM
+REM  WHAT TO LOOK FOR:
+REM    - Each line in Notepad should be complete and exact
+REM    - No missing characters at beginning or end of lines
+REM    - No repeated characters (HID key-repeat bug)
+REM    - No swapped characters (USB scheduling issue)
+REM    - Compare typed output with payload source manually
+REM
+REM  IF CHARACTERS ARE MISSING:
+REM    Increase DEFAULTDELAY (try 150 or 200) to slow injection.
+REM    Some target PCs with software rendering or AV scanning
+REM    miss keystrokes when injection is too fast.
+REM
+REM  IF END OF LINE IS CUT OFF:
+REM    HAXSTIK STRING buffer may be length-limited. Check firmware
+REM    STRING parser for max line length cap.
+REM ================================================================
+
+DEFAULTDELAY 100
+
+REM --- Open Notepad ---
+GUI r
+DELAY 700
+STRING notepad
+ENTER
+DELAY 1200
+
+REM --- Header ---
+STRING ================================================================
+ENTER
+STRING   HAXSTIK OS - LONG STRING STABILITY TEST
+ENTER
+STRING ================================================================
+ENTER
+ENTER
+
+REM --- Test Block 1: 80-character line ---
+STRING [TEST 1] 80 chars:
+ENTER
+STRING ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz!@#$%^&*()-=+[]
+ENTER
+DELAY 300
+
+REM --- Test Block 2: 120-character line ---
+STRING [TEST 2] 120 chars:
+ENTER
+STRING AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+ENTER
+DELAY 300
+
+REM --- Test Block 3: Mixed case + symbols, 100 chars ---
+STRING [TEST 3] Mixed 100 chars:
+ENTER
+STRING HaxStik-OS!v8.2_TEST@2026#PAYLOAD$CHECK%LONG^STRING&INJECT*STABLE(1234567890)ABCDEFGHIJKLMNOP
+ENTER
+DELAY 300
+
+REM --- Test Block 4: Repeated short patterns ---
+STRING [TEST 4] Repeated pattern x20:
+ENTER
+STRING HAXSTIK-HAXSTIK-HAXSTIK-HAXSTIK-HAXSTIK-HAXSTIK-HAXSTIK-HAXSTIK-HAXSTIK-HAXSTIK-HAXSTIK-HAXSTIK-HAXSTIK-HAXSTIK-HAXSTIK-HAXSTIK-HAXSTIK-HAXSTIK-HAXSTIK-HAXSTIK-
+ENTER
+DELAY 300
+
+REM --- Test Block 5: Numbers only, 100 chars ---
+STRING [TEST 5] Digits 100 chars:
+ENTER
+STRING 1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890
+ENTER
+DELAY 300
+
+REM --- Test Block 6: Spaces and punctuation ---
+STRING [TEST 6] Spaces + punctuation:
+ENTER
+STRING The quick brown fox jumps over the lazy dog. Pack my box with five dozen liquor jugs!
+ENTER
+DELAY 300
+
+REM --- Footer ---
+ENTER
+STRING ================================================================
+ENTER
+STRING   LONG STRING TEST COMPLETE - Check each line matches exactly
+ENTER
+STRING ================================================================
+ENTER

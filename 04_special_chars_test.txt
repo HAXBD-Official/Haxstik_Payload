@@ -1,0 +1,97 @@
+REM ================================================================
+REM  PAYLOAD  : 04 - Special Characters Test
+REM  VERSION  : 1.0
+REM  TARGET OS: Windows (QWERTY US keyboard layout)
+REM  SAFE     : YES — types into Notepad only
+REM ----------------------------------------------------------------
+REM  PURPOSE:
+REM    Tests injection of special and symbol characters.
+REM    Keyboard layout mismatches cause wrong chars to appear.
+REM    Common failure: @ becomes " on UK layout, \ becomes # etc.
+REM
+REM  WHAT TO LOOK FOR:
+REM    - Compare each line in Notepad with the "Expected:" label
+REM    - Any mismatch = keyboard layout issue on target
+REM    - If symbols are wrong: the target PC uses non-US layout
+REM    - HAXSTIK log should show no errors
+REM
+REM  NOTE: If target uses non-US layout, use STRING_ALT command
+REM        instead of STRING for reliable special char injection.
+REM ================================================================
+
+DEFAULTDELAY 80
+
+GUI r
+DELAY 600
+STRING notepad
+ENTER
+DELAY 1200
+
+STRING ================================================
+ENTER
+STRING   HAXSTIK OS — SPECIAL CHARS TEST
+ENTER
+STRING ================================================
+ENTER
+ENTER
+
+STRING [ Numbers ]
+ENTER
+STRING 0 1 2 3 4 5 6 7 8 9
+ENTER
+ENTER
+
+STRING [ Shifted Numbers — Symbols ]
+ENTER
+STRING ! @ # $ % ^ & * ( )
+ENTER
+STRING   Expected: ! @ # $ % ^ & * ( )
+ENTER
+ENTER
+
+STRING [ Brackets & Braces ]
+ENTER
+STRING [ ] { } ( ) < >
+ENTER
+STRING   Expected: [ ] { } ( ) < >
+ENTER
+ENTER
+
+STRING [ Punctuation ]
+ENTER
+STRING . , : ; ' " ` ~
+ENTER
+STRING   Expected: . , : ; ' " ` ~
+ENTER
+ENTER
+
+STRING [ Math & Logic ]
+ENTER
+STRING + - * / = \ | _ ^
+ENTER
+STRING   Expected: + - * / = \ | _ ^
+ENTER
+ENTER
+
+STRING [ Common Payload Chars ]
+ENTER
+STRING powershell -ep bypass
+ENTER
+STRING cmd /c whoami
+ENTER
+STRING http://192.168.4.1
+ENTER
+STRING "quoted string"
+ENTER
+STRING 'single quoted'
+ENTER
+ENTER
+
+STRING ================================================
+ENTER
+STRING   SPECIAL CHARS TEST COMPLETE
+ENTER
+STRING   Check each line against Expected: labels
+ENTER
+STRING ================================================
+ENTER

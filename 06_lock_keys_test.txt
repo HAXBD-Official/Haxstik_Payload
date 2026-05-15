@@ -1,0 +1,75 @@
+REM ================================================================
+REM  PAYLOAD  : 06 - Lock Keys Test (CAPSLOCK / NUMLOCK)
+REM  VERSION  : 1.0
+REM  TARGET OS: Windows
+REM  SAFE     : YES — only toggles lock keys, restores state
+REM ----------------------------------------------------------------
+REM  PURPOSE:
+REM    Tests CAPSLOCK and NUMLOCK toggle commands.
+REM    HAXSTIK uses LED state changes from lock keys to detect OS
+REM    (OS fingerprinting). If lock keys don't toggle correctly,
+REM    OS detection will fail and STRING_ALT won't work properly.
+REM
+REM  WHAT TO LOOK FOR:
+REM    - After CAPSLOCK: typed "hello" should appear as "HELLO"
+REM    - After second CAPSLOCK: back to "hello" lowercase
+REM    - Watch keyboard LED on target (CAPSLOCK LED should flash)
+REM    - NUMLOCK toggle: check numpad behavior changes
+REM    - HAXSTIK log: "NumLock toggled" message should appear
+REM    - If no LED change visible: OS fingerprinting may be broken
+REM ================================================================
+
+DEFAULTDELAY 120
+
+GUI r
+DELAY 600
+STRING notepad
+ENTER
+DELAY 1200
+
+STRING ================================================
+ENTER
+STRING   HAXSTIK OS — LOCK KEYS TEST
+ENTER
+STRING ================================================
+ENTER
+ENTER
+
+REM --- CAPSLOCK test ---
+STRING [ TEST: CAPSLOCK toggle ]
+ENTER
+STRING before capslock: hello world
+ENTER
+CAPSLOCK
+DELAY 300
+STRING after capslock ON: hello world
+ENTER
+CAPSLOCK
+DELAY 300
+STRING after capslock OFF: hello world
+ENTER
+STRING   Expected: line 2 = HELLO WORLD, line 3 = hello world
+ENTER
+ENTER
+
+REM --- NUMLOCK test ---
+STRING [ TEST: NUMLOCK toggle ]
+ENTER
+STRING NumLock toggled — check LED on keyboard
+ENTER
+NUMLOCK
+DELAY 500
+STRING NumLock toggled again — LED should be back
+ENTER
+NUMLOCK
+DELAY 300
+ENTER
+
+STRING ================================================
+ENTER
+STRING   LOCK KEYS TEST COMPLETE
+ENTER
+STRING   Check: CAPSLOCK made text uppercase then back
+ENTER
+STRING ================================================
+ENTER

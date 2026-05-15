@@ -1,0 +1,84 @@
+REM ================================================================
+REM  PAYLOAD  : 09 - Windows System Info (Safe Read-Only)
+REM  VERSION  : 1.0
+REM  TARGET OS: Windows 10 / 11
+REM  SAFE     : YES — read-only commands, no changes made
+REM ----------------------------------------------------------------
+REM  PURPOSE:
+REM    Opens CMD and runs safe, read-only system information commands.
+REM    Tests that:
+REM      - GUI+R launches Run correctly
+REM      - CMD opens via payload injection
+REM      - STRING injection into CMD works
+REM      - Multi-command sequences run in order
+REM      - Output appears in CMD window
+REM
+REM  COMMANDS RUN (all read-only, no system changes):
+REM    hostname   — shows computer name
+REM    whoami     — shows current user
+REM    ipconfig   — shows network adapters and IP addresses
+REM    systeminfo — full system info (takes ~5s to load)
+REM    net user   — list local user accounts
+REM    echo DONE  — confirms payload reached the end
+REM
+REM  WHAT TO LOOK FOR:
+REM    - CMD window opens on target PC
+REM    - Each command runs and shows output
+REM    - No errors in HAXSTIK log
+REM    - "HAXSTIK-SYSINFO-COMPLETE" appears at end of CMD
+REM ================================================================
+
+DEFAULTDELAY 150
+
+REM --- Open CMD via Run ---
+GUI r
+DELAY 700
+STRING cmd
+ENTER
+DELAY 1200
+
+REM --- Run read-only info commands ---
+STRING echo ================================================
+ENTER
+DELAY 200
+STRING echo   HAXSTIK OS - SYSINFO TEST (READ ONLY)
+ENTER
+DELAY 200
+STRING echo ================================================
+ENTER
+DELAY 200
+
+STRING hostname
+ENTER
+DELAY 400
+
+STRING whoami
+ENTER
+DELAY 400
+
+STRING echo.
+ENTER
+STRING ipconfig
+ENTER
+DELAY 1500
+
+STRING echo.
+ENTER
+STRING net user
+ENTER
+DELAY 800
+
+STRING echo.
+ENTER
+STRING echo ================================================
+ENTER
+STRING echo   HAXSTIK-SYSINFO-COMPLETE — All commands ran OK
+ENTER
+STRING echo ================================================
+ENTER
+DELAY 500
+
+REM --- Leave CMD open for operator to view ---
+REM --- To auto-close, uncomment next line: ---
+REM STRING exit
+REM ENTER

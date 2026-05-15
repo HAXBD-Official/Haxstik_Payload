@@ -1,0 +1,91 @@
+REM ================================================================
+REM  PAYLOAD  : 08 - GUI (Windows Key) Shortcuts Test
+REM  VERSION  : 1.0
+REM  TARGET OS: Windows 10 / 11
+REM  SAFE     : YES — opens apps but does not modify anything
+REM ----------------------------------------------------------------
+REM  PURPOSE:
+REM    Tests Windows key (GUI) combinations that payloads commonly use.
+REM    A broken GUI key means no app launching, no Run dialog,
+REM    and most real-world payloads will silently fail.
+REM
+REM  WHAT TO LOOK FOR:
+REM    - GUI r: Windows Run dialog should open
+REM    - GUI d: Desktop should show (minimize all)
+REM    - GUI e: File Explorer should open
+REM    - GUI l: Screen lock (reconnect after this)
+REM    - After each step check HAXSTIK log for progress
+REM
+REM  WARNING: GUI l will LOCK THE SCREEN. You need to unlock manually.
+REM           Remove or comment that section if unwanted.
+REM ================================================================
+
+DEFAULTDELAY 200
+
+REM --- Step 1: GUI+R (Run dialog) ---
+STRING Testing GUI+R — Run dialog should open in 1 second...
+REM (no Notepad open yet, typing into void — that is fine)
+DELAY 500
+GUI r
+DELAY 800
+REM Close it with Escape
+ESCAPE
+DELAY 500
+
+REM --- Step 2: Open Notepad via GUI+R for logging ---
+GUI r
+DELAY 700
+STRING notepad
+ENTER
+DELAY 1200
+
+STRING ================================================
+ENTER
+STRING   HAXSTIK OS — GUI SHORTCUTS TEST
+ENTER
+STRING ================================================
+ENTER
+ENTER
+
+STRING [ TEST 1: GUI+R — Run dialog ]
+ENTER
+STRING   Result: You opened Notepad via GUI+R — PASS
+ENTER
+ENTER
+
+REM --- Step 3: GUI+D (show desktop) ---
+STRING [ TEST 2: GUI+D — Show Desktop ]
+ENTER
+STRING   Minimizing in 2s... then restoring in 3s...
+ENTER
+DELAY 1000
+GUI d
+DELAY 3000
+REM Reopen Notepad
+GUI r
+DELAY 700
+STRING notepad
+ENTER
+DELAY 1200
+STRING   Result: Desktop shown and Notepad reopened — PASS
+ENTER
+ENTER
+
+REM --- Step 4: GUI+E (File Explorer) ---
+STRING [ TEST 3: GUI+E — File Explorer ]
+ENTER
+GUI e
+DELAY 2000
+REM Close File Explorer
+ALT F4
+DELAY 500
+STRING   Result: File Explorer opened and closed — PASS
+ENTER
+ENTER
+
+STRING ================================================
+ENTER
+STRING   GUI SHORTCUTS TEST COMPLETE
+ENTER
+STRING ================================================
+ENTER

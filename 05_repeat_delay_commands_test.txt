@@ -1,0 +1,90 @@
+REM ================================================================
+REM  PAYLOAD  : 05 - REPEAT & DELAY Commands Test
+REM  VERSION  : 1.0
+REM  TARGET OS: Windows
+REM  SAFE     : YES — Notepad only
+REM ----------------------------------------------------------------
+REM  PURPOSE:
+REM    Tests the REPEAT N and DELAY commands.
+REM    REPEAT bugs cause payloads to loop wrong number of times
+REM    or skip actions. DELAY bugs cause timing issues.
+REM
+REM  WHAT TO LOOK FOR:
+REM    - "PING" should appear exactly 5 times from REPEAT 5
+REM    - "BEAT" should appear exactly 3 times from REPEAT 3
+REM    - Delay sections should have noticeable pauses (watch timing)
+REM    - HAXSTIK log shows correct line count at "Done (X lines)"
+REM ================================================================
+
+DEFAULTDELAY 100
+
+GUI r
+DELAY 600
+STRING notepad
+ENTER
+DELAY 1200
+
+STRING ================================================
+ENTER
+STRING   HAXSTIK OS — REPEAT AND DELAY TEST
+ENTER
+STRING ================================================
+ENTER
+ENTER
+
+REM --- REPEAT test: 5 times ---
+STRING [ TEST: REPEAT 5 — expect 5x PING ]
+ENTER
+STRING PING
+ENTER
+REPEAT 5
+ENTER
+STRING   Count above: should be exactly 5 lines of PING
+ENTER
+ENTER
+
+REM --- REPEAT test: 3 times ---
+STRING [ TEST: REPEAT 3 — expect 3x BEAT ]
+ENTER
+STRING BEAT
+ENTER
+REPEAT 3
+ENTER
+STRING   Count above: should be exactly 3 lines of BEAT
+ENTER
+ENTER
+
+REM --- DELAY test: visible pauses ---
+STRING [ TEST: DELAY — watch for pauses below ]
+ENTER
+STRING Before 500ms delay...
+DELAY 500
+STRING After 500ms delay — OK
+ENTER
+STRING Before 1000ms delay...
+DELAY 1000
+STRING After 1000ms delay — OK
+ENTER
+STRING Before 2000ms delay...
+DELAY 2000
+STRING After 2000ms delay — OK
+ENTER
+ENTER
+
+REM --- Combined REPEAT + DELAY ---
+STRING [ TEST: REPEAT with DELAY — 3x with 300ms gap ]
+ENTER
+STRING TICK
+DELAY 300
+REPEAT 3
+ENTER
+STRING   Should see 3 TICKs with visible rhythm
+ENTER
+ENTER
+
+STRING ================================================
+ENTER
+STRING   REPEAT AND DELAY TEST COMPLETE
+ENTER
+STRING ================================================
+ENTER
